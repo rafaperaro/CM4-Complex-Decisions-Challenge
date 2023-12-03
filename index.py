@@ -2,6 +2,7 @@ import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 
 # Imports Puapa New Guinea Weather Data and safes it as a Dataframe
 
@@ -24,9 +25,12 @@ for sunrise, sunset in zip(df['sunrise'], df['sunset']):
 
 df['hoursofsunlight'] = hours_of_sunlight
 
-#Creates a column totalsolarradiation which stores the watts per square meter for each day of the year
+# Creates a column totalsolarradiation which stores the watts per square meter for each day of the year
 
 df['totalsolarradiation'] = df['hoursofsunlight'] * df['solarradiation']
+
+# Creates a volumn waterproduction which stores the water produced by a 100 m² system for each day
+df['waterproduction'] = df['totalsolarradiation'] / 10 * 1.02
 
 # Plots histogram of totalsolarradiation
 sns.set_style("whitegrid")
@@ -38,3 +42,23 @@ plt.ylabel('Frequency')
 plt.show()
 
 # Plots a line graph of totalsolarradiation for each year
+x = np.arange(365)
+
+fig, ax = plt.subplots()
+ax.plot(x, df['totalsolarradiation'], color='#4878CF', lw=2)
+ax.fill_between(x, 0, df['totalsolarradiation'], alpha=.3)
+plt.title('Total Radiation per day (W/m²)', fontweight='bold')
+plt.xlabel('Days')
+plt.ylabel('Total Radiation per day in (W/m²)')
+plt.show()
+
+# Plots a line graph for waterproduction each day in liters
+x = np.arange(365)
+
+fig, ax = plt.subplots()
+ax.plot(x, df['waterproduction'], color='#4878CF', lw=2)
+ax.fill_between(x, 0, df['waterproduction'], alpha=.3)
+plt.title('Total Water Desalination per day (kg)', fontweight='bold')
+plt.xlabel('Days')
+plt.ylabel('Total Water Desalination per day in kg')
+plt.show()
