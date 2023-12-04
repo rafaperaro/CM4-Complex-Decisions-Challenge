@@ -10,7 +10,25 @@ df = pd.read_csv('./data/Papua New Guinea Weather Data 2022.csv')
 
 # Drops Rows that are not part of the analysis
 
-df = df.drop(columns=['name', 'stations', 'uvindex', 'visibility', 'sealevelpressure', 'winddir', 'windspeed', 'windgust', 'preciptype', 'snowdepth', 'snow', 'precipprob', 'precip', 'dew', 'humidity', 'feelslike', 'feelslikemax', 'feelslikemin', 'severerisk'], axis=1)
+df = df.drop(columns=['name',
+                      'stations',
+                      'uvindex',
+                      'visibility',
+                      'sealevelpressure',
+                      'winddir',
+                      'windspeed',
+                      'windgust',
+                      'preciptype',
+                      'snowdepth',
+                      'snow',
+                      'precipprob',
+                      'precip',
+                      'dew',
+                      'humidity',
+                      'feelslike',
+                      'feelslikemax',
+                      'feelslikemin',
+                      'severerisk' ], axis=1)
 
 # Creates column hoursofsunlight that stores the hours between sunrise and sunset rounded to the hour
 
@@ -69,10 +87,27 @@ columns = ['Name', 'Unit' 'Mean', 'Median', 'Mode']
 
 descriptive_df = pd.DataFrame(columns=columns)
 
-new_row_total_radiation = {'Name': 'Total Sunlight Radiation per Day', 'Unit': 'W/m²', 'Mean': df['totalsolarradiation'].mean(), 'Median': df['totalsolarradiation'], 'Mode': df['totalsolarradiation'].mode()[0]}
+new_row_total_radiation = {
+    'Name': 'Total Sunlight Radiation per Day',
+    'Unit': 'W/m²',
+    'Mean': df['totalsolarradiation'].mean(),
+    'Median': df['totalsolarradiation'],
+    'Mode': df['totalsolarradiation'].mode()[0]
+    }
 
 descriptive_df = descriptive_df._append(new_row_total_radiation, ignore_index=True)
 
-new_row_total_water_production= {'Name': 'Total Water Production per Day', 'Unit': 'kg', 'Mean': df['waterproduction'].mean(), 'Median': df['waterproduction'], 'Mode': df['waterproduction'].mode()[0]}
+new_row_total_water_production= {
+    'Name': 'Total Water Production per Day',
+    'Unit': 'kg', 'Mean': df['waterproduction'].mean(),
+    'Median': df['waterproduction'],
+    'Mode': df['waterproduction'].mode()[0]
+    }
 
 descriptive_df = descriptive_df._append(new_row_total_water_production, ignore_index=True)
+
+print(descriptive_df.shape)
+
+csv_file_path = './exports/descriptive_stats.csv'
+
+descriptive_df.to_csv(csv_file_path, index=False)
