@@ -62,3 +62,17 @@ plt.title('Total Water Desalination per day (kg)', fontweight='bold')
 plt.xlabel('Days')
 plt.ylabel('Total Water Desalination per day in kg')
 plt.show()
+
+# Descriptive Analysis
+# Calculates mean, mode, median, q1, q2 and stores it in a dataframe
+columns = ['Name', 'Unit' 'Mean', 'Median', 'Mode']
+
+descriptive_df = pd.DataFrame(columns=columns)
+
+new_row_total_radiation = {'Name': 'Total Sunlight Radiation per Day', 'Unit': 'W/m²', 'Mean': df['totalsolarradiation'].mean(), 'Median': df['totalsolarradiation'], 'Mode': df['totalsolarradiation'].mode()[0]}
+
+descriptive_df = descriptive_df._append(new_row_total_radiation, ignore_index=True)
+
+new_row_total_water_production= {'Name': 'Total Water Production per Day', 'Unit': 'kg', 'Mean': df['waterproduction'].mean(), 'Median': df['waterproduction'], 'Mode': df['waterproduction'].mode()[0]}
+
+descriptive_df = descriptive_df._append(new_row_total_water_production, ignore_index=True)
