@@ -105,9 +105,3 @@ new_row_total_water_production= {
     }
 
 descriptive_df = descriptive_df._append(new_row_total_water_production, ignore_index=True)
-
-print(descriptive_df.shape)
-
-csv_file_path = './exports/descriptive_stats.csv'
-
-descriptive_df.to_csv(csv_file_path, index=False)
