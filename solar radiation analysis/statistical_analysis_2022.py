@@ -12,7 +12,6 @@ from helper_functions import read_weather_data
 df = read_weather_data('./data/Papua New Guinea Weather Data 2022.csv')
 
 # Creates column hoursofsunlight that stores the hours between sunrise and sunset rounded to the hour
-
 hours_of_sunlight = []
 date_format = '%Y-%m-%dT%H:%M:%S'
 
@@ -25,7 +24,6 @@ for sunrise, sunset in zip(df['sunrise'], df['sunset']):
 df['hoursofsunlight'] = hours_of_sunlight
 
 # Creates a column totalsolarradiation which stores the watts per square meter for each day of the year
-
 df['totalsolarradiation'] = df['hoursofsunlight'] * df['solarradiation']
 
 # Creates a column waterproduction which stores the water produced by a 100 m² system for each day
