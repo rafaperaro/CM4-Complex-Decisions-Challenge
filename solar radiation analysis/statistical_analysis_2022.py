@@ -1,36 +1,15 @@
-# This file analyzes the weather data of 2022 in Papa New Guinnea
+# This file analyzes the weather data of 2022 in Papa New Guinnea.
+# It provides graphs for total solar radiation each der per m² and waterproduction of a 100m²
 
 import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from helper_functions import read_weather_data
 
-# Imports Puapa New Guinea Weather Data and safes it as a Dataframe
-
-df = pd.read_csv('./data/Papua New Guinea Weather Data 2022.csv')
-
-# Drops Rows that are not part of the analysis
-
-df = df.drop(columns=['name',
-                      'stations',
-                      'uvindex',
-                      'visibility',
-                      'sealevelpressure',
-                      'winddir',
-                      'windspeed',
-                      'windgust',
-                      'preciptype',
-                      'snowdepth',
-                      'snow',
-                      'precipprob',
-                      'precip',
-                      'dew',
-                      'humidity',
-                      'feelslike',
-                      'feelslikemax',
-                      'feelslikemin',
-                      'severerisk' ], axis=1)
+# Reads weather data from Papa New Guines for the year 2022
+df = read_weather_data('./data/Papua New Guinea Weather Data 2022.csv')
 
 # Creates column hoursofsunlight that stores the hours between sunrise and sunset rounded to the hour
 
@@ -49,19 +28,18 @@ df['hoursofsunlight'] = hours_of_sunlight
 
 df['totalsolarradiation'] = df['hoursofsunlight'] * df['solarradiation']
 
-# Creates a volumn waterproduction which stores the water produced by a 100 m² system for each day
-df['waterproduction'] = df['totalsolarradiation'] / 10 * 1.02
+# Creates a column waterproduction which stores the water produced by a 100 m² system for each day
+df['waterproduction'] = df['totalsolarradiation'] / 10
 
 # Plots histogram of totalsolarradiation
 sns.set_style("whitegrid")
-
 plt.hist(df['totalsolarradiation'], bins=12, color='#C9D4E7', align='mid', edgecolor='#4878CF', linewidth=2)
 plt.title('Total Radiation per day (W/m²)', fontweight='bold')
 plt.xlabel('Radiation per day (W/m²)')
 plt.ylabel('Frequency')
 plt.show()
 
-# Plots a line graph of totalsolarradiation for each year
+# Plots a line graph of totalsolarradiation for each day
 x = np.arange(365)
 
 fig, ax = plt.subplots()
@@ -84,7 +62,7 @@ plt.ylabel('Total Water Desalination per day in kg')
 plt.show()
 
 # Descriptive Analysis
-# Calculates mean, mode, median, q1, q2 and stores it in a dataframe
+# Calculates mean, mode, median of total_sunlight_radiation and waterproduction and stores it as a dataframe
 columns = ['Name', 'Unit' 'Mean', 'Median', 'Mode']
 
 descriptive_df = pd.DataFrame(columns=columns)
@@ -107,5 +85,3 @@ new_row_total_water_production= {
     }
 
 descriptive_df = descriptive_df._append(new_row_total_water_production, ignore_index=True)
-
-print(descriptive_df.shape)
