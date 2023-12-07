@@ -1,3 +1,5 @@
+# This file analyzes the weather data of 2022 in Papa New Guinnea
+
 import pandas as pd
 from datetime import datetime
 import matplotlib.pyplot as plt
@@ -105,3 +107,5 @@ new_row_total_water_production= {
     }
 
 descriptive_df = descriptive_df._append(new_row_total_water_production, ignore_index=True)
+
+print(descriptive_df.shape)
